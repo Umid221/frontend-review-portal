@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import theme from "./styles/theme";
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
 function App() {
     return (
         <>
-            <ChakraProvider>
+            <ChakraProvider theme={theme}>
                 <RouterProvider router={router} />
             </ChakraProvider>
         </>
