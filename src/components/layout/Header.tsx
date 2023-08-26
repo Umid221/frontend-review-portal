@@ -5,14 +5,16 @@ import {
     Flex,
     Heading,
     IconButton,
+    Select,
     Spacer,
     useColorMode,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 function Header() {
     const { colorMode, toggleColorMode } = useColorMode();
-    console.log(colorMode);
+    const { t, i18n } = useTranslation();
 
     return (
         <Box bg={"green.500"} p="4" color={"white"}>
@@ -22,6 +24,13 @@ function Header() {
                 </Link>
                 <Spacer />
                 <Flex gap={2}>
+                    <Select
+                        defaultValue={"en"}
+                        onChange={(e) => i18n.changeLanguage(e.target.value)}
+                    >
+                        <option value="en">En</option>
+                        <option value="uz">Uz</option>
+                    </Select>
                     <IconButton
                         aria-label="dark-mode"
                         icon={
@@ -30,7 +39,7 @@ function Header() {
                         onClick={() => toggleColorMode()}
                     />
                     <Link to="/login">
-                        <Button>Login</Button>
+                        <Button>{t("auth.login")}</Button>
                     </Link>
                 </Flex>
             </Flex>

@@ -7,13 +7,12 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-import { Link, useLocation } from "react-router-dom";
-import AuthWrapper from "../components/auth-layout/AuthWrapper";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import AuthWrapper from "src/components/auth-layout/AuthWrapper";
 
 function Signup() {
-    const { state } = useLocation();
-    console.log(state);
-
+    const { t } = useTranslation();
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
@@ -24,7 +23,7 @@ function Signup() {
     }
 
     return (
-        <AuthWrapper title="Register">
+        <AuthWrapper title={t("auth.register")}>
             <CardBody>
                 <form onSubmit={handleSubmit} id="login">
                     <Flex flexDir={"column"} gap="4">
@@ -42,7 +41,7 @@ function Signup() {
                             />
                         </FormControl>
                         <FormControl>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>{t("auth.password")}</FormLabel>
                             <Input
                                 name="password"
                                 type="password"
@@ -54,10 +53,10 @@ function Signup() {
             </CardBody>
             <CardFooter flexDirection={"column"} gap="3" textAlign="center">
                 <Button form="login" type="submit" variant="green">
-                    Register
+                    {t("auth.register")}
                 </Button>
                 <Link to="/login">
-                    <Button variant={"link"}>Already have an account?</Button>
+                    <Button variant={"link"}>{t("auth.haveAccount")}</Button>
                 </Link>
             </CardFooter>
         </AuthWrapper>

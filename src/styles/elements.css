@@ -1,0 +1,7 @@
+option{
+    color: black;
+}
+
+.chakra-ui-dark option{
+    color: white;
+}

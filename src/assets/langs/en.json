@@ -1,0 +1,11 @@
+{
+    "translation": {
+        "auth": {
+            "login": "Log In",
+            "register": "Register",
+            "password": "Password",
+            "noAccount": "Don't have an account?",
+            "haveAccount": "Already have an account?"
+        }
+    }
+}

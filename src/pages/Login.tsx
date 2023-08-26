@@ -1,23 +1,18 @@
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import {
     Button,
-    Card,
     CardBody,
     CardFooter,
-    CardHeader,
-    Center,
     Flex,
     FormControl,
-    FormHelperText,
     FormLabel,
-    Heading,
-    IconButton,
     Input,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import AuthWrapper from "../components/auth-layout/AuthWrapper";
+import AuthWrapper from "src/components/auth-layout/AuthWrapper";
 
 function Login() {
+    const { t } = useTranslation();
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
@@ -28,7 +23,7 @@ function Login() {
     }
 
     return (
-        <AuthWrapper title="Login">
+        <AuthWrapper title={t("auth.login")}>
             <CardBody>
                 <form onSubmit={handleSubmit} id="login">
                     <Flex flexDir={"column"} gap="4">
@@ -45,7 +40,7 @@ function Login() {
                                 </FormHelperText> */}
                         </FormControl>
                         <FormControl>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>{t("auth.password")}</FormLabel>
                             <Input
                                 name="password"
                                 type="password"
@@ -57,11 +52,11 @@ function Login() {
             </CardBody>
             <CardFooter flexDirection={"column"} gap="3" textAlign="center">
                 <Button form="login" type="submit" variant="green">
-                    Log In
+                    {t("auth.login")}
                 </Button>
-                <Link to="/register">
-                    <Button variant={"link"}>Don't have an account?</Button>
-                </Link>
+                <Button variant={"link"}>
+                    <Link to="/register">{t("auth.noAccount")}</Link>
+                </Button>
             </CardFooter>
         </AuthWrapper>
     );

@@ -1,0 +1,11 @@
+{
+    "translation": {
+        "auth": {
+            "login": "Kirish",
+            "register": "Ro'yxatdan o'tish",
+            "password": "Parol",
+            "noAccount": "Akkauntingiz yo'qmi?",
+            "haveAccount": "Akkauntingiz bormi?"
+        }
+    }
+}

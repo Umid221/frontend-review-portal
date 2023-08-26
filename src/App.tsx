@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
-import Layout from "./components/layout";
 import "./App.css";
-import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import theme from "./styles/theme";
+import Layout from "src/components/layout";
+import Home from "src/pages/Home";
+import Signup from "src/pages/Signup";
+import Login from "src/pages/Login";
+import theme from "src/styles/theme";
 
 const router = createBrowserRouter([
     {
