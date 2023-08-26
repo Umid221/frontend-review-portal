@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
 import Layout from "./components/layout";
 import "./App.css";
 import Home from "./pages/Home";
@@ -32,7 +32,9 @@ function App() {
     return (
         <>
             <ChakraProvider theme={theme}>
-                <RouterProvider router={router} />
+                <ColorModeProvider>
+                    <RouterProvider router={router} />
+                </ColorModeProvider>
             </ChakraProvider>
         </>
     );
