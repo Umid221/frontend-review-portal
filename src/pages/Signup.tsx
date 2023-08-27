@@ -7,13 +7,14 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
+import { FieldValues, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import AuthWrapper from "src/components/auth-layout/AuthWrapper";
 
 function Signup() {
     const { t } = useTranslation();
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function handsleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
 
@@ -22,10 +23,25 @@ function Signup() {
         console.log(form.password.value);
     }
 
+    const {
+        handleSubmit,
+        register,
+        formState: { errors, isSubmitting },
+    } = useForm();
+
+    function onSubmit(values: FieldValues) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                resolve(values);
+            }, 3000);
+        });
+    }
+
     return (
         <AuthWrapper title={t("auth.register")}>
             <CardBody>
-                <form onSubmit={handleSubmit} id="login">
+                <form onSubmit={handleSubmit(onSubmit)} id="login">
                     <Flex flexDir={"column"} gap="4">
                         <FormControl>
                             <FormLabel>Name</FormLabel>
