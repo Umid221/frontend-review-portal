@@ -11,6 +11,16 @@ const InputThemes = {
                 _hover: {
                     borderColor: "#91d2af",
                 },
+                _invalid: {
+                    borderColor: "#E96372",
+                    _focus: {
+                        borderColor: "red",
+                        boxShadow: "0 0 0 1px red",
+                    },
+                    _hover: {
+                        borderColor: "#eb647477",
+                    },
+                },
             },
         },
     },
