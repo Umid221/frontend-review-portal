@@ -9,7 +9,15 @@ import { store } from "./app/store";
 function App() {
     return (
         <Provider store={store}>
-            <ChakraProvider theme={theme}>
+            <ChakraProvider
+                theme={theme}
+                toastOptions={{
+                    defaultOptions: {
+                        position: "top-right",
+                        status: "success",
+                    },
+                }}
+            >
                 <ColorModeProvider>
                     <RouterProvider router={router} />
                 </ColorModeProvider>

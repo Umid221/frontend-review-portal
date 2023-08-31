@@ -5,7 +5,13 @@
             "register": "Ro'yxatdan o'tish",
             "password": "Parol",
             "noAccount": "Akkauntingiz yo'qmi?",
-            "haveAccount": "Akkauntingiz bormi?"
+            "haveAccount": "Akkauntingiz bormi?",
+            "registerSuccess": "Yangi foydalanuvchi ro'yxatga olindi!",
+            "loginSuccess": "Akkauntga muvaffaqiyatli kirildi!"
+        },
+        "error": {
+            "duplicateEmail": "Bu pochta manzilidan foydalanilgan!",
+            "emptyFieldsError": "Barcha majburiy joylar to'ldirilishi shart!"
         }
     }
 }

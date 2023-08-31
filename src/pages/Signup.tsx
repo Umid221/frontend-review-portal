@@ -3,17 +3,16 @@ import {
     CardBody,
     CardFooter,
     Flex,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
     Input,
     useToast,
 } from "@chakra-ui/react";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import AuthWrapper from "src/components/auth-layout/AuthWrapper";
+import FormField from "src/components/FormField";
 import { useRegisterMutation } from "src/features/auth/authApiSlice";
+import { useErrorToast } from "src/utils/hooks/toastHandlers";
 
 type FormValues = {
     fullName: string;
@@ -24,25 +23,20 @@ type FormValues = {
 function Signup() {
     const { t } = useTranslation();
     const toast = useToast();
+    const showError = useErrorToast();
     const {
         handleSubmit,
         register,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<FormValues>();
 
-    const [registerUser] = useRegisterMutation();
+    const [registerUser, { isLoading: isSubmitting }] = useRegisterMutation();
 
     function onSubmit(values: FormValues) {
-        console.log(values);
         registerUser(values)
             .unwrap()
-            .then((res) =>
-                toast({
-                    title: res.message,
-                    status: "success",
-                    position: "top-right",
-                }),
-            );
+            .then((res) => toast({ title: t("auth.registerSuccess") }))
+            .catch((err) => showError(err));
     }
 
     return (
@@ -50,8 +44,11 @@ function Signup() {
             <CardBody>
                 <form onSubmit={handleSubmit(onSubmit)} id="login">
                     <Flex flexDir={"column"} gap="4">
-                        <FormControl isInvalid={!!errors.fullName}>
-                            <FormLabel htmlFor="fullName">Name</FormLabel>
+                        <FormField
+                            label="Full Name"
+                            id="fullName"
+                            error={errors.fullName?.message}
+                        >
                             <Input
                                 id="fullName"
                                 variant="green"
@@ -59,12 +56,12 @@ function Signup() {
                                     required: "Enter your full name",
                                 })}
                             />
-                            <FormErrorMessage>
-                                {errors.fullName?.message}
-                            </FormErrorMessage>
-                        </FormControl>
-                        <FormControl isInvalid={!!errors.email}>
-                            <FormLabel htmlFor="email">Email</FormLabel>
+                        </FormField>
+                        <FormField
+                            label="Email"
+                            id="email"
+                            error={errors.email?.message}
+                        >
                             <Input
                                 id="email"
                                 variant="green"
@@ -77,14 +74,12 @@ function Signup() {
                                 })}
                                 isInvalid={!!errors.email}
                             />
-                            <FormErrorMessage>
-                                {errors.email?.message}
-                            </FormErrorMessage>
-                        </FormControl>
-                        <FormControl isInvalid={!!errors.password}>
-                            <FormLabel htmlFor="password">
-                                {t("auth.password")}
-                            </FormLabel>
+                        </FormField>
+                        <FormField
+                            label={t("auth.password")}
+                            id="password"
+                            error={errors.password?.message}
+                        >
                             <Input
                                 id="password"
                                 type="password"
@@ -98,15 +93,17 @@ function Signup() {
                                     },
                                 })}
                             />
-                            <FormErrorMessage>
-                                {errors.password?.message}
-                            </FormErrorMessage>
-                        </FormControl>
+                        </FormField>
                     </Flex>
                 </form>
             </CardBody>
             <CardFooter flexDirection={"column"} gap="3" textAlign="center">
-                <Button form="login" type="submit" variant="green">
+                <Button
+                    form="login"
+                    type="submit"
+                    variant="green"
+                    isLoading={isSubmitting}
+                >
                     {t("auth.register")}
                 </Button>
                 <Link to="/login">

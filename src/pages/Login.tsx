@@ -1,20 +1,13 @@
-import {
-    Button,
-    CardBody,
-    CardFooter,
-    Flex,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
-} from "@chakra-ui/react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { Button, CardBody, CardFooter, Flex, Input } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import AuthWrapper from "src/components/auth-layout/AuthWrapper";
+import FormField from "src/components/FormField";
 
-type Inputs = {
+type LoginFormValues = {
     email: string;
+    password: string;
 };
 
 function Login() {
@@ -23,15 +16,10 @@ function Login() {
         handleSubmit,
         register,
         formState: { errors, isSubmitting },
-    } = useForm();
+    } = useForm<LoginFormValues>();
 
-    function onSubmit(values: FieldValues) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                resolve(values);
-            }, 3000);
-        });
+    function onSubmit(values: LoginFormValues) {
+        console.log(values);
     }
 
     return (
@@ -39,8 +27,11 @@ function Login() {
             <CardBody>
                 <form onSubmit={handleSubmit(onSubmit)} id="login">
                     <Flex flexDir={"column"} gap="4">
-                        <FormControl isInvalid={!!errors.email}>
-                            <FormLabel htmlFor="email">Email</FormLabel>
+                        <FormField
+                            label="Email"
+                            id="email"
+                            error={errors.email?.message}
+                        >
                             <Input
                                 id="email"
                                 variant="green"
@@ -52,14 +43,12 @@ function Login() {
                                     },
                                 })}
                             />
-                            <FormErrorMessage>
-                                {errors.email?.message}
-                            </FormErrorMessage>
-                        </FormControl>
-                        <FormControl isInvalid={!!errors.password}>
-                            <FormLabel htmlFor="password">
-                                {t("auth.password")}
-                            </FormLabel>
+                        </FormField>
+                        <FormField
+                            label={t("auth.password")}
+                            id="password"
+                            error={errors.password?.message}
+                        >
                             <Input
                                 id="password"
                                 type="password"
@@ -73,10 +62,7 @@ function Login() {
                                     },
                                 })}
                             />
-                            <FormErrorMessage>
-                                {errors.password?.message}
-                            </FormErrorMessage>
-                        </FormControl>
+                        </FormField>
                     </Flex>
                 </form>
             </CardBody>

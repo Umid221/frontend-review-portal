@@ -5,7 +5,13 @@
             "register": "Register",
             "password": "Password",
             "noAccount": "Don't have an account?",
-            "haveAccount": "Already have an account?"
+            "haveAccount": "Already have an account?",
+            "registerSuccess": "New user saved!",
+            "loginSuccess": "Login successful!"
+        },
+        "error": {
+            "duplicateEmail": "This email is already in use!",
+            "emptyFieldsError": "All required fields must be filled!"
         }
     }
 }
