@@ -2,6 +2,7 @@
     "translation": {
         "auth": {
             "login": "Log In",
+            "logOut": "Log Out",
             "register": "Register",
             "password": "Password",
             "noAccount": "Don't have an account?",
@@ -11,6 +12,8 @@
         },
         "error": {
             "duplicateEmail": "This email is already in use!",
+            "invalidEmail": "The email is incorrect!",
+            "invalidPassword": "The password is incorrect!",
             "emptyFieldsError": "All required fields must be filled!"
         }
     }

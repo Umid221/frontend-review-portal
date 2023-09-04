@@ -2,6 +2,7 @@
     "translation": {
         "auth": {
             "login": "Kirish",
+            "logOut": "Chiqish",
             "register": "Ro'yxatdan o'tish",
             "password": "Parol",
             "noAccount": "Akkauntingiz yo'qmi?",
@@ -11,6 +12,8 @@
         },
         "error": {
             "duplicateEmail": "Bu pochta manzilidan foydalanilgan!",
+            "invalidEmail": "Pochta manzili xato!",
+            "invalidPassword": "Parol xato!",
             "emptyFieldsError": "Barcha majburiy joylar to'ldirilishi shart!"
         }
     }

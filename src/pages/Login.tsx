@@ -1,9 +1,21 @@
-import { Button, CardBody, CardFooter, Flex, Input } from "@chakra-ui/react";
+import {
+    Button,
+    CardBody,
+    CardFooter,
+    Flex,
+    Input,
+    useToast,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthWrapper from "src/components/auth-layout/AuthWrapper";
 import FormField from "src/components/FormField";
+import {
+    useLoginMutation,
+    useRegisterMutation,
+} from "src/features/auth/authApiSlice";
+import { useErrorToast } from "src/utils/hooks/toastHandlers";
 
 type LoginFormValues = {
     email: string;
@@ -12,14 +24,27 @@ type LoginFormValues = {
 
 function Login() {
     const { t } = useTranslation();
+    const toast = useToast();
+    const showError = useErrorToast();
+    const navigate = useNavigate();
     const {
         handleSubmit,
         register,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<LoginFormValues>();
 
+    const [login, { isLoading: isSubmitting }] = useLoginMutation();
+
     function onSubmit(values: LoginFormValues) {
-        console.log(values);
+        login(values)
+            .unwrap()
+            .then((res) => {
+                toast({ title: t("auth.loginSuccess") });
+                localStorage.setItem("access-token", res.accessToken);
+                localStorage.setItem("refresh-token", res.refreshToken);
+                navigate("/");
+            })
+            .catch((err) => showError(err));
     }
 
     return (

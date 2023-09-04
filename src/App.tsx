@@ -13,7 +13,7 @@ function App() {
                 theme={theme}
                 toastOptions={{
                     defaultOptions: {
-                        position: "top-right",
+                        position: "bottom-right",
                         status: "success",
                     },
                 }}

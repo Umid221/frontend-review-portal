@@ -16,12 +16,25 @@ function Header() {
     const { colorMode, toggleColorMode } = useColorMode();
     const { t, i18n } = useTranslation();
 
+    const isLoggedIn = !!localStorage.getItem("access-token");
+
+    function handleLogout() {
+        if (isLoggedIn) {
+            localStorage.removeItem("access-token");
+        }
+    }
+
     return (
         <Box bg={"green.500"} p="4" color={"white"}>
-            <Flex>
+            <Flex alignItems={"center"} gap={4}>
                 <Link to="/">
                     <Heading size={"lg"}>Homepage</Heading>
                 </Link>
+                {isLoggedIn && (
+                    <Link to="/reviews">
+                        <Heading size={"sm"}>my page</Heading>
+                    </Link>
+                )}
                 <Spacer />
                 <Flex gap={2}>
                     <Select
@@ -38,9 +51,15 @@ function Header() {
                         }
                         onClick={() => toggleColorMode()}
                     />
-                    <Link to="/login">
-                        <Button>{t("auth.login")}</Button>
-                    </Link>
+                    {isLoggedIn ? (
+                        <></>
+                    ) : (
+                        <Link to="/login">
+                            <Button onClick={handleLogout}>
+                                {t(`auth.login`)}
+                            </Button>
+                        </Link>
+                    )}
                 </Flex>
             </Flex>
         </Box>

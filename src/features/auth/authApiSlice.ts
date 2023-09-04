@@ -1,21 +1,34 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { customBaseQuery } from "src/app/customBaseQuery";
 
-const baseUrl = "http://localhost:3500";
+const baseUrl = "http://localhost:3500/api";
 
 interface User {
     id: string;
 }
 
+interface LoginBody {
+    email: string;
+    password: string;
+}
+
+interface RegisterBody extends LoginBody {
+    fullName: string;
+}
+
+interface RegisterResponse {
+    message: string;
+}
+
+interface LoginResponse {
+    message: string;
+    accessToken: string;
+    refreshToken: string;
+}
+
 export const authApiSlice = createApi({
     reducerPath: "api",
-    baseQuery: fetchBaseQuery({
-        baseUrl,
-        prepareHeaders(headers) {
-            // headers.set('')
-
-            return headers;
-        },
-    }),
+    baseQuery: customBaseQuery(),
     endpoints(builder) {
         return {
             getUsers: builder.query<User[], number | void>({
@@ -23,9 +36,16 @@ export const authApiSlice = createApi({
                     return `/users?limit=${limit}`;
                 },
             }),
-            register: builder.mutation({
+            register: builder.mutation<RegisterResponse, RegisterBody>({
                 query: (body) => ({
-                    url: `/auth`,
+                    url: `/auth/register`,
+                    method: "post",
+                    body,
+                }),
+            }),
+            login: builder.mutation<LoginResponse, LoginBody>({
+                query: (body) => ({
+                    url: "/auth/login",
                     method: "post",
                     body,
                 }),
@@ -34,4 +54,5 @@ export const authApiSlice = createApi({
     },
 });
 
-export const { useGetUsersQuery, useRegisterMutation } = authApiSlice;
+export const { useGetUsersQuery, useRegisterMutation, useLoginMutation } =
+    authApiSlice;

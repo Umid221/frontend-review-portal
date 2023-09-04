@@ -35,7 +35,7 @@ function Signup() {
     function onSubmit(values: FormValues) {
         registerUser(values)
             .unwrap()
-            .then((res) => toast({ title: t("auth.registerSuccess") }))
+            .then(() => toast({ title: t("auth.registerSuccess") }))
             .catch((err) => showError(err));
     }
 
