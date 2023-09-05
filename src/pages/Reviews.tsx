@@ -9,13 +9,12 @@ import {
     Thead,
     Tr,
 } from "@chakra-ui/react";
+import CreateReviewModal from "src/components/reviews/CreateReviewModal";
 
 function Reviews() {
     return (
         <Flex m={3} direction="column" gap={4}>
-            <Button variant={"green"} alignSelf="end">
-                create
-            </Button>
+            <CreateReviewModal />
             <TableContainer>
                 <Table>
                     <Thead>

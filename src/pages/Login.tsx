@@ -11,10 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import AuthWrapper from "src/components/auth-layout/AuthWrapper";
 import FormField from "src/components/FormField";
-import {
-    useLoginMutation,
-    useRegisterMutation,
-} from "src/features/auth/authApiSlice";
+import { useLoginMutation } from "src/features/auth/authApiSlice";
 import { useErrorToast } from "src/utils/hooks/toastHandlers";
 
 type LoginFormValues = {
