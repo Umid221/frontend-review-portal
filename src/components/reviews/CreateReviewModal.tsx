@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     Input,
     Modal,
@@ -8,18 +9,26 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Slider,
+    SliderFilledTrack,
+    SliderThumb,
+    SliderTrack,
+    Textarea,
     useDisclosure,
 } from "@chakra-ui/react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useGetTagsQuery } from "src/features/tags/tagsApiSlice";
+import AutoComplete from "../AutoComplete";
 import FormField from "../FormField";
 
 type EditorFormValues = {
     name: string;
     reviewedArt: string;
-    group: ReviewGroupEnum;
+    groupId: ReviewGroupEnum;
     tags: string[];
     reviewText: string;
-    image: string;
+    image?: string;
     grade: number;
 };
 
@@ -30,7 +39,11 @@ enum ReviewGroupEnum {
 }
 
 function CreateReviewModal() {
+    const initialRef = useRef(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { data: tags } = useGetTagsQuery({});
+    console.log(tags);
+
     const {
         handleSubmit,
         register,
@@ -44,7 +57,12 @@ function CreateReviewModal() {
             <Button onClick={onOpen} variant={"green"} alignSelf="end">
                 create
             </Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal
+                isOpen={isOpen}
+                onClose={onClose}
+                initialFocusRef={initialRef}
+                size="6xl"
+            >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Review Editor</ModalHeader>
@@ -56,7 +74,56 @@ function CreateReviewModal() {
                                 id="name"
                                 error={errors.name?.message}
                             >
+                                <Input variant={"green"} ref={initialRef} />
+                            </FormField>
+                            <FormField
+                                label="Reviewed Art Name"
+                                id="reviewedArt"
+                                error={errors.reviewedArt?.message}
+                            >
                                 <Input variant={"green"} />
+                            </FormField>
+                            <FormField
+                                label="Group"
+                                id="groupId"
+                                error={errors.groupId?.message}
+                            >
+                                <Input variant={"green"} />
+                            </FormField>
+                            <AutoComplete
+                                id="tags"
+                                error={errors.tags?.message}
+                                label="Tags"
+                                items={tags?.data?.map((item) => ({
+                                    value: item.name,
+                                    label: item.name,
+                                }))}
+                                placeholder="Type a tag"
+                            />
+                            <FormField
+                                label="Group"
+                                id="groupId"
+                                error={errors.groupId?.message}
+                            >
+                                <Textarea variant="green" />
+                            </FormField>
+                            <FormField
+                                label="Grade"
+                                id="grade"
+                                error={errors.grade?.message}
+                            >
+                                <Slider
+                                    defaultValue={60}
+                                    min={0}
+                                    max={300}
+                                    step={30}
+                                >
+                                    <SliderTrack bg="#afe3c7">
+                                        <Box position="relative" right={10} />
+                                        <SliderFilledTrack bg="#5aad81" />
+                                    </SliderTrack>
+                                    <SliderThumb boxSize={5} bg="#27a461" />
+                                </Slider>
                             </FormField>
                         </form>
                     </ModalBody>

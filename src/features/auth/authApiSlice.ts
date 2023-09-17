@@ -1,7 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { customBaseQuery } from "src/app/customBaseQuery";
-
-const baseUrl = "http://localhost:3500/api";
+import { apiSlice } from "src/app/apiSlice";
 
 interface User {
     id: string;
@@ -26,9 +23,7 @@ interface LoginResponse {
     refreshToken: string;
 }
 
-export const authApiSlice = createApi({
-    reducerPath: "api",
-    baseQuery: customBaseQuery(),
+export const authApiSlice = apiSlice.injectEndpoints({
     endpoints(builder) {
         return {
             getUsers: builder.query<User[], number | void>({

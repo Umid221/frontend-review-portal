@@ -1,5 +1,6 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { authApiSlice } from "src/features/auth/authApiSlice";
+import { tagsApiSlice } from "src/features/tags/tagsApiSlice";
 import counterReducer from "src/features/counter/counterSlice";
 
 export const store = configureStore({
