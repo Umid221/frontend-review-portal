@@ -11,6 +11,7 @@ import {
     ModalOverlay,
     Slider,
     SliderFilledTrack,
+    SliderMark,
     SliderThumb,
     SliderTrack,
     Textarea,
@@ -38,11 +39,16 @@ enum ReviewGroupEnum {
     games,
 }
 
+const labelStyles = {
+    mt: "2",
+    ml: "-2.5",
+    fontSize: "sm",
+};
+
 function CreateReviewModal() {
     const initialRef = useRef(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { data: tags } = useGetTagsQuery({});
-    console.log(tags);
 
     const {
         handleSubmit,
@@ -112,12 +118,16 @@ function CreateReviewModal() {
                                 id="grade"
                                 error={errors.grade?.message}
                             >
-                                <Slider
-                                    defaultValue={60}
-                                    min={0}
-                                    max={300}
-                                    step={30}
-                                >
+                                <Slider defaultValue={0} min={0} max={10}>
+                                    {[0, 2, 4, 6, 8, 10].map((item) => (
+                                        <SliderMark
+                                            key={item}
+                                            value={item}
+                                            mt={2}
+                                        >
+                                            {item}
+                                        </SliderMark>
+                                    ))}
                                     <SliderTrack bg="#afe3c7">
                                         <Box position="relative" right={10} />
                                         <SliderFilledTrack bg="#5aad81" />

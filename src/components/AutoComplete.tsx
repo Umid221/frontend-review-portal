@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { useCreateTagMutation } from "src/features/tags/tagsApiSlice";
 import { useTranslation } from "react-i18next";
-// import { Autocomplete, Option } from "chakra-ui-simple-autocomplete";
 
 export interface Item {
     label: string;
