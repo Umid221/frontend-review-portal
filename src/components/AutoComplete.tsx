@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useCreateTagMutation } from "src/features/tags/tagsApiSlice";
 import { useTranslation } from "react-i18next";
-import { Autocomplete, Option } from "chakra-ui-simple-autocomplete";
+// import { Autocomplete, Option } from "chakra-ui-simple-autocomplete";
 
 export interface Item {
     label: string;
@@ -18,7 +18,7 @@ export interface Item {
 interface AutoCompleteProps {
     error: string | undefined;
     label: string;
-    items: Option[] | undefined;
+    items: Item[] | undefined;
     placeholder: string;
     id: string;
 }
@@ -32,11 +32,11 @@ export default function AutoComplete({
 }: AutoCompleteProps) {
     const toast = useToast();
     const { t } = useTranslation();
-    const [selectedItems, setSelectedItems] = React.useState<Option[]>([]);
+    const [selectedItems, setSelectedItems] = React.useState<Item[]>([]);
 
     const [createTag] = useCreateTagMutation();
 
-    const handleCreateItem = (item: Option) => {
+    const handleCreateItem = (item: Item) => {
         createTag({ name: item.label })
             .unwrap()
             .then((res) => toast({ title: t(res.message) }));
@@ -44,7 +44,7 @@ export default function AutoComplete({
         setSelectedItems((curr) => [...curr, item]);
     };
 
-    const handleSelectedItemsChange = (selectedItems?: Option[]) => {
+    const handleSelectedItemsChange = (selectedItems?: Item[]) => {
         if (selectedItems) {
             setSelectedItems(selectedItems);
         }
@@ -53,7 +53,7 @@ export default function AutoComplete({
     return (
         <FormControl isInvalid={!!error}>
             <FormLabel htmlFor={id}>{label}</FormLabel>
-            {/* <CUIAutoComplete
+            <CUIAutoComplete
                 label={label}
                 placeholder={placeholder}
                 onCreateItem={handleCreateItem}
@@ -63,17 +63,6 @@ export default function AutoComplete({
                 onSelectedItemsChange={(changes) =>
                     handleSelectedItemsChange(changes.selectedItems)
                 }
-            /> */}
-            <Autocomplete
-                id={id}
-                options={items ?? []}
-                result={selectedItems}
-                setResult={(options: Option[]) => {
-                    // setResult(options);
-                    handleSelectedItemsChange(options);
-                }}
-                placeholder="Autocomplete"
-                variant={"filled"}
             />
             <FormErrorMessage>{error}</FormErrorMessage>
         </FormControl>

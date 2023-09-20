@@ -9,19 +9,22 @@ import {
     Spacer,
     useColorMode,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 function Header() {
     const { colorMode, toggleColorMode } = useColorMode();
     const { t, i18n } = useTranslation();
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        !!localStorage.getItem("access-token"),
+    );
 
-    const isLoggedIn = !!localStorage.getItem("access-token");
+    // const isLoggedIn = !!localStorage.getItem("access-token");
 
     function handleLogout() {
-        if (isLoggedIn) {
-            localStorage.removeItem("access-token");
-        }
+        localStorage.removeItem("access-token");
+        setIsLoggedIn(false);
     }
 
     return (
@@ -52,12 +55,12 @@ function Header() {
                         onClick={() => toggleColorMode()}
                     />
                     {isLoggedIn ? (
-                        <></>
+                        <Button onClick={handleLogout} paddingInline={30}>
+                            {t(`auth.logOut`)}
+                        </Button>
                     ) : (
                         <Link to="/login">
-                            <Button onClick={handleLogout}>
-                                {t(`auth.login`)}
-                            </Button>
+                            <Button>{t(`auth.login`)}</Button>
                         </Link>
                     )}
                 </Flex>
